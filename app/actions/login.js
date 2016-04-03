@@ -1,10 +1,15 @@
 export const SET_EMAIL = 'SET_EMAIL';
 export const SET_PASSWORD = 'SET_PASSWORD';
+export const SET_ERROR = 'SET_ERROR';
 
 export function setEmail(email) {
-  dispatch({ type: SET_EMAIL, email: email });
+  return { type: SET_EMAIL, email: email };
 }
 
 export function setPassword(password) {
-  dispatch({ type: SET_PASSWORD, password: password });
+  return { type: SET_PASSWORD, password: password };
+}
+
+export function setError(error) {
+  return { type: SET_ERROR, error: error };
 }

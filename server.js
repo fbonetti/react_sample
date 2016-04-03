@@ -5,6 +5,11 @@ const dev = require('webpack-dev-middleware');
 const hot = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
 const expressSession = require('express-session');
+const User = require('./app/models/user.js');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
+
+mongoose.connect('mongodb://localhost/myapp');
 
 const port = process.env.PORT || 3000;
 const server = express();
@@ -20,6 +25,7 @@ process.on('unhandledRejection', (reason, p) => {
   }
 });
 
+server.use(bodyParser.json());
 server.use(express.static(path.resolve(__dirname, 'dist')));
 server.use(expressSession({
   secret: 'mySecretKey',
@@ -35,10 +41,23 @@ server.get('/favicon.ico', function(req, res) {
   res.end();
 });
 
-server.get('/login', function (req, res) {
-  console.log("user_id: " + req.session.user_id);
-  req.session.user_id = 100;
-  res.send('thanks');
+server.post('/login', function (req, res) {
+  var { email, password } = req.body;
+
+  User.findOne({ email, password }, 'email', function (err, user) {
+    if (err) {
+      res.status(500);
+      res.json({ error: err.message });
+    } else {
+      if (user) {
+        req.session.userId = user._id;
+        res.json({ redirect_url: '/patients'});
+      } else {
+        res.status(400);
+        res.json({ error: 'Invalid email or password' });
+      }
+    }
+  });
 });
 
 if (!process.env.NODE_ENV) {
