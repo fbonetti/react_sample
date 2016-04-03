@@ -1,11 +1,11 @@
 {
-  "name": "universal-react",
-  "version": "1.0.0-rc1",
-  "description": "A universal react starter, with routing, meta, title, and data features",
+  "name": "react_sample",
+  "version": "1.0.0",
+  "description": "Sample react app",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DominicTobias/universal-react.git"
+    "url": "https://github.com/fbonetti/react_sample.git"
   },
   "keywords": [
     "react",
@@ -17,12 +17,9 @@
     "redux",
     "flux"
   ],
-  "author": "Dominic Tobias <dominic.tobias@gmail.com>",
+  "author": "Frank Bonetti <frank.r.bonetti@gmail.com>",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DominicTobias/universal-react/issues"
-  },
-  "homepage": "https://github.com/DominicTobias/universal-react",
+  "homepage": "https://github.com/fbonetti/react_sample",
   "scripts": {
     "start": "node server",
     "start-prod": "npm run build && NODE_ENV=production PORT=3000 node server",
