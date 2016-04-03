@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const dev = require('webpack-dev-middleware');
 const hot = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
-const expressSession = require('express-session');
+const cookieSession = require('cookie-session')
 const User = require('./app/models/user.js');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
@@ -27,11 +27,9 @@ process.on('unhandledRejection', (reason, p) => {
 
 server.use(bodyParser.json());
 server.use(express.static(path.resolve(__dirname, 'dist')));
-server.use(expressSession({
-  secret: 'mySecretKey',
-  cookie: { maxAge: 60000 },
-  resave: true,
-  saveUninitialized: true
+server.use(cookieSession({
+  name: 'session',
+  secret: 'super-secret-session'
 }));
 
 // Short-circuit the browser's annoying favicon request. You can still
@@ -51,11 +49,31 @@ server.post('/login', function (req, res) {
     } else {
       if (user) {
         req.session.userId = user._id;
+        req.session.save();
+        res.header('Access-Control-Allow-Credentials', 'true');
         res.json({ redirect_url: '/patients'});
       } else {
         res.status(400);
         res.json({ error: 'Invalid email or password' });
       }
+    }
+  });
+});
+
+server.get('/patients.json', function (req, res) {
+  User.findOne({ _id: req.session.userId }, '_id', function (err, currentUser) {
+    if (err || !currentUser) {
+      res.status(500);
+      res.json({ error: 'not logged in' });
+    } else {
+      User.find({ doctorId: currentUser._id }, function (err, patients) {
+        if (err || !patients) {
+          res.status(500);
+          res.json({ error: 'error' });
+        } else {
+          res.json(patients);
+        }
+      });
     }
   });
 });

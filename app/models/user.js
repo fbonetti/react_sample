@@ -5,7 +5,10 @@ var schema = new Schema({
   email: String,
   password: String,
   type: String,
-  age: Number
+  name: String,
+  age: Number,
+  address: String,
+  doctorId: Schema.Types.ObjectId
 });
 
 var User = mongoose.model('User', schema);

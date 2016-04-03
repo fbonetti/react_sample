@@ -10,7 +10,11 @@ class Login extends Component {
 
     fetch("/login", {
       method: "POST",
-      headers: {'Accept': 'application/json','Content-Type': 'application/json'},
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ email, password })
     })
     .then((response) => response.json())
