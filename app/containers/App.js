@@ -15,12 +15,22 @@ class App extends Component {
             {'name': 'description', 'content': 'My super dooper dope app'}
           ]}
         />
-        <nav>
-          <ul>
-            <li><Link to='/'>Users</Link></li>
-          </ul>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css" />
+        <nav className="navbar navbar-default navbar-static-top">
+          <div className="container">
+            <div className="navbar-header">
+              <a className="navbar-brand" href="#">Brand</a>
+            </div>
+            <div className="collapse navbar-collapse">
+              <p className="navbar-text navbar-right">
+                Signed in as <a href="#" className="navbar-link">Mark Otto</a>
+              </p>
+            </div>
+          </div>
         </nav>
-        {this.props.children}
+        <div className="container">
+          {this.props.children}
+        </div>
       </div>
     );
   }

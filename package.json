@@ -21,8 +21,8 @@
   "license": "ISC",
   "homepage": "https://github.com/fbonetti/react_sample",
   "scripts": {
-    "start": "node server",
-    "start-prod": "npm run build && NODE_ENV=production PORT=3000 node server",
+    "start": "babel-node server",
+    "start-prod": "npm run build && NODE_ENV=production PORT=3000 babel-node server",
     "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress"
   },
   "dependencies": {
