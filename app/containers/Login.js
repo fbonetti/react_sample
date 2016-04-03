@@ -13,7 +13,7 @@ class Login extends Component {
         <Helmet title="Login" />
         <div className="col-sm-6 col-md-offset-3">
           <div className="panel panel-default">
-            <div className="panel-heading">Login</div>
+            <div className="panel-heading">Please login</div>
             <div className="panel-body">
               <div className="form-group">
                 <label className="control-label">Email</label>

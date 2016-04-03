@@ -15,7 +15,6 @@ class App extends Component {
             {'name': 'description', 'content': 'My super dooper dope app'}
           ]}
         />
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css" />
         <nav className="navbar navbar-default navbar-static-top">
           <div className="container">
             <div className="navbar-header">

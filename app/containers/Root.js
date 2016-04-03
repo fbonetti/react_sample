@@ -23,6 +23,7 @@ class Root extends Component {
           {head.title.toComponent()}
           {head.meta.toComponent()}
           {head.link.toComponent()}
+          <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css" />
         </head>
         <body>
           <div id='root' dangerouslySetInnerHTML={{__html: this.props.content}} />

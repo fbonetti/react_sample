@@ -1,11 +1,10 @@
-require('babel-core/register');
-
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
 const dev = require('webpack-dev-middleware');
 const hot = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
+const expressSession = require('express-session');
 
 const port = process.env.PORT || 3000;
 const server = express();
@@ -21,6 +20,14 @@ process.on('unhandledRejection', (reason, p) => {
   }
 });
 
+server.use(express.static(path.resolve(__dirname, 'dist')));
+server.use(expressSession({
+  secret: 'mySecretKey',
+  cookie: { maxAge: 60000 },
+  resave: true,
+  saveUninitialized: true
+}));
+
 // Short-circuit the browser's annoying favicon request. You can still
 // specify one as long as it doesn't have this exact name and path.
 server.get('/favicon.ico', function(req, res) {
@@ -28,7 +35,11 @@ server.get('/favicon.ico', function(req, res) {
   res.end();
 });
 
-server.use(express.static(path.resolve(__dirname, 'dist')));
+server.get('/login', function (req, res) {
+  console.log("user_id: " + req.session.user_id);
+  req.session.user_id = 100;
+  res.send('thanks');
+});
 
 if (!process.env.NODE_ENV) {
   const compiler = webpack(config);
