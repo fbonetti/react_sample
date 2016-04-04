@@ -5,7 +5,7 @@ class PatientList extends Component {
 
   render() {
     return (
-      <table className="table">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Id</th>
@@ -20,7 +20,7 @@ class PatientList extends Component {
             return (
               <tr key={patient._id}>
                 <td>
-                  <Link to={`patient/${patient._id}`}>{patient._id}</Link>
+                  <Link to={`/patients/${patient._id}`}>{patient._id}</Link>
                 </td>
                 <td>{patient.name}</td>
                 <td>{patient.age}</td>

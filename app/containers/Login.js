@@ -8,7 +8,7 @@ class Login extends Component {
   attemptLogin() {
     var { email, password, dispatch } = this.props;
 
-    fetch("/login", {
+    fetch("/login.json", {
       method: "POST",
       credentials: 'same-origin',
       headers: {

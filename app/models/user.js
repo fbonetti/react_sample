@@ -8,7 +8,8 @@ var schema = new Schema({
   name: String,
   age: Number,
   address: String,
-  doctorId: Schema.Types.ObjectId
+  doctorId: Schema.Types.ObjectId,
+  files: [ String ]
 });
 
 var User = mongoose.model('User', schema);

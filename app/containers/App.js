@@ -20,11 +20,6 @@ class App extends Component {
             <div className="navbar-header">
               <a className="navbar-brand" href="#">Brand</a>
             </div>
-            <div className="collapse navbar-collapse">
-              <p className="navbar-text navbar-right">
-                Signed in as <a href="#" className="navbar-link">Mark Otto</a>
-              </p>
-            </div>
           </div>
         </nav>
         <div className="container">

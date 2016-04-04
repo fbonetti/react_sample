@@ -39,10 +39,10 @@ server.get('/favicon.ico', function(req, res) {
   res.end();
 });
 
-server.post('/login', function (req, res) {
+server.post('/login.json', function (req, res) {
   var { email, password } = req.body;
 
-  User.findOne({ email, password }, 'email', function (err, user) {
+  User.findOne({ email, password }, function (err, user) {
     if (err) {
       res.status(500);
       res.json({ error: err.message });
@@ -51,11 +51,27 @@ server.post('/login', function (req, res) {
         req.session.userId = user._id;
         req.session.save();
         res.header('Access-Control-Allow-Credentials', 'true');
-        res.json({ redirect_url: '/patients'});
+
+        if (user.type == "doctor") {
+          res.json({ redirect_url: '/patients'});
+        } else {
+          res.json({ redirect_url: '/upload'});
+        }
       } else {
         res.status(400);
         res.json({ error: 'Invalid email or password' });
       }
+    }
+  });
+});
+
+server.get('/patients/:id.json', function (req, res) {
+  User.findOne({ _id: req.params.id }, function (err, patient) {
+    if (err || !patient) {
+      res.status(500);
+      res.json({ error: 'error' });
+    } else {
+      res.json(patient);
     }
   });
 });
