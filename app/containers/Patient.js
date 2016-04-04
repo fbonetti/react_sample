@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as PatientActions from '../actions/patient';
+import Dropzone from 'react-dropzone';
 
 class Patient extends Component {
 
@@ -15,6 +16,12 @@ class Patient extends Component {
   componentDidMount() {
     const { dispatch, params } = this.props;
     Patient.readyOnActions(dispatch, params);
+  }
+
+  onDrop(files) {
+    const { dispatch, params } = this.props;
+    const patientId = params.id;
+    dispatch(PatientActions.uploadFiles(patientId, files));
   }
 
   renderPatient() {
@@ -34,17 +41,22 @@ class Patient extends Component {
   }
 
   renderFiles() {
-    const { patient: { files } } = this.props;
-    if (!files || files.length === 0) return null;
+    var { patient: { files } } = this.props;
+    files = files || [];
 
     return (
-      <ul>
-        {files.map(file => (
-          <li>
-            <a href={file}>file</a>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <Dropzone onDrop={this.onDrop.bind(this)}>
+          <div>Try dropping some files here, or click to select files to upload.</div>
+        </Dropzone>
+        <ul>
+          {files.map(file => (
+            <li>
+              <a href={file}>file</a>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 

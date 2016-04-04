@@ -1,6 +1,7 @@
 import {
   PATIENT_FETCHING,
-  PATIENT_FETCHED
+  PATIENT_FETCHED,
+  ADD_FILES
 } from '../actions/patient';
 
 export default function patient(state = {}, action) {
@@ -11,6 +12,8 @@ export default function patient(state = {}, action) {
       return Object.assign({}, state, {
         patient: action.patient
       });
+    case ADD_FILES:
+      return state;
     default:
       return state;
   }

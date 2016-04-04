@@ -4,10 +4,13 @@ const webpack = require('webpack');
 const dev = require('webpack-dev-middleware');
 const hot = require('webpack-hot-middleware');
 const config = require('./webpack.config.js');
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
 const User = require('./app/models/user.js');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const upload = multer({ dest: './uploads/' });
+const mv = require('mv');
 
 mongoose.connect('mongodb://localhost/myapp');
 
@@ -26,6 +29,7 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true}));
 server.use(express.static(path.resolve(__dirname, 'dist')));
 server.use(cookieSession({
   name: 'session',
@@ -72,6 +76,19 @@ server.get('/patients/:id.json', function (req, res) {
       res.json({ error: 'error' });
     } else {
       res.json(patient);
+    }
+  });
+});
+
+server.post('/patients/:id/upload', upload.array('files[]', 12), function (req, res) {
+  User.findById(req.params.id, function(err, user) {
+    if (err || !user) {
+      res.status(500);
+      res.json({ error: 'error'});
+    } else {
+      req.files.forEach(file => {
+        
+      });
     }
   });
 });
